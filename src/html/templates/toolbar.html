@@ -1,0 +1,53 @@
+<template id="toolbar">
+    <style>
+        .mainContent{
+            margin-top: 0;
+            min-width: 99%;
+            max-width: 100%;
+            min-height: 2pt;
+            max-height: fit-content;
+            background-color: rgb(3, 140, 204);
+        }
+        #title{
+            color: #fff;
+        }
+    </style>
+    <div class="mainContent">
+        <button>
+        </button>
+        <h1 id="title">
+        </h1>
+        
+    </div>
+    
+</template>
+<script>
+    const toolbar = (document.currentScript||document._currentScript).ownerDocument.querySelector('template').content
+    class Toolbar extends HTMLElement{
+            
+        static get observedAttribute(){
+            return ['title']
+        }
+
+        get title(){return this.getAttribute('title')}
+        set title(value){this.setAttribute('title',value)}
+        $(id){
+            return this.shadowRoot.getElementById(id)
+        }
+
+        connectedCallback(){
+            const content = document.importNode(toolbar,true);
+            this.attachShadow({mode:'open'});
+            this.shadowRoot.appendChild(content);
+            this.update();
+        }
+        attributeChangeCallback(name,oldVal,newVal){
+            this.update();
+        }
+        update(){
+            this.$('title').innerHTML = this.title;
+        }
+    }
+    customElements.define('my-toolbar',Toolbar);
+
+</script>

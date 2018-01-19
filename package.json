@@ -1,0 +1,21 @@
+{
+  "name": "alto",
+  "version": "0.0.1",
+  "description": "A music player",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "blimp-alto"
+  },
+  "keywords": [
+    "Music",
+    "Streamer",
+    "Media",
+    "player"
+  ],
+  "author": "Steven Nqoba Novukuza <nqoba.novukuza@gmail.com>",
+  "license": "MIT"
+}

@@ -1,0 +1,78 @@
+<template id="side-bar">
+    <style>
+        #sideMenu{
+            left: 0;
+            top: 0;
+            position: absolute;
+            display: flex;
+            margin-top: 0;
+            min-width: 10%;
+            max-width: 50%;
+            min-height: 100%;
+            background-color: rgb(140, 3 , 204);
+            animation: cubic-bezier(0.075, 0.82, 0.165, 1);
+            animation-duration: 600ms;
+            color: #fff;
+        }
+        .open{
+            visibility: visible;
+        }
+        .closed{
+            visibility: collapse;
+        }
+            
+    </style>
+        <div id="sideMenu" class="open">
+            <button id="btn">Click</button>
+            <ul id="list">
+                <li>Item</li>
+            </ul>
+        </div>
+</template>
+<script>
+    const sidemenu = (document.currentScript||document._currentScript).ownerDocument.querySelector('template').content
+    class SideBar extends HTMLElement{
+        static get observedAttribute(){
+            return ['list','isOpen']
+        }
+
+        get isOpen(){return this.getAttribute('isOpen')}
+        set isOpen(value){this.setAttribute('isOpen',value)}
+
+        get list(){return this.getAttribute('list')}
+
+        set list(value){this.setAttribute('list',value)}
+
+        $(id){return this.shadowRoot.getElementById(id)}
+    
+        connectedCallback(){
+            const content = document.importNode(sidemenu,true);
+            this.attachShadow({mode:'open'});
+            this.shadowRoot.appendChild(content);
+            this.$('btn').onclick = this.toggleState;
+            this.update();
+        }
+            
+        attributeChangeCallback(name,oldVal,newVal){
+            this.update();
+        }
+
+        update(){
+        }
+
+        addListItem(item,action){
+            var listItem = document.createElement('li');
+            listItem.textContent = item;
+            listItem.addEventListener('click',action); 
+            this.$('list').appendChild(listItem)
+        }
+
+        toggleState(){
+            console.log(Date.now());
+            console.log($('sideMenu'));
+        }
+    }
+
+    customElements.define('my-side-bar',SideBar);
+    
+ </script>
